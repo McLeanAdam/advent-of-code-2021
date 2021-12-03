@@ -7,7 +7,6 @@ export const day3_1 = (req, res) => {
         for (var i = 0; i < currentValue.length; i++) {
             total[i] = total[i] + parseInt(currentValue.charAt(i));
           }
-          console.log(total)
           return total;
         
     }, [...Array(data[0].length).fill(0)])
