@@ -16,6 +16,41 @@ export const day3_1 = (req, res) => {
     res.status(200).send(`${parseInt(gamma,2) * parseInt(epsilon,2)}`);
 }
 
+export const day3_2 = (req, res) => {
+
+    const { data } = req.body;
+    let charIndex = 0;
+    
+    const oxygenGen = applySort(data,true);
+    const CO2Scrub = applySort(data,false);
+
+    res.status(200).send(`${parseInt(oxygenGen,2) * parseInt(CO2Scrub,2)}`);
+}
+
+const applySort = (data, Majority) => {
+    let charIndex = 0;
+    while (data.length > 1) {
+        data = sortArray(data,charIndex,Majority);
+        charIndex++;
+    };
+    return data[0];
+}
+const sortArray = (data: string[], charLocation: number, isMajority: boolean) => {
+    
+    const filteredData = data.reduce((total, currentValue, currentIndex, arr) => {
+        if(currentValue[charLocation] === '0') {
+            total[0].push(currentValue);
+        }
+        else {
+            total[1].push(currentValue); 
+        }
+    
+          return total
+        
+    }, [[],[]])
+    return isMajority === (filteredData[0].length > filteredData[1].length) ? filteredData[0] : filteredData[1];
+}
+
 const convertToGammaAndEpsilonRates = (data: number[], itemCount: number) => {
     const calculatedValues = data.reduce( (total, currentValue, currentIndex, arr) => {
         if(currentValue > itemCount/2) {
